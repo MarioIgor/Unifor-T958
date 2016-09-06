@@ -12,42 +12,84 @@
         <h2 class="text-center">Cadastro de Livros</h2>
         <hr />
 
-        <div class="col-md-5">
-            <form>
+        <div class="col-md-4">
+            <form name="formInsercao" ng-submit="adiciona(formInsercao)">
                 <div class="form-group">
                     <label class="control-label">ISBN</label>
-                    <input type="text" class="form-control" ng-model="livro.isbn">
+                    <input type="text" class="form-control" ng-model="livro.isbn" required>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Título</label>
-                    <input type="text" class="form-control" ng-model="livro.titulo">
+                    <input type="text" class="form-control" ng-model="livro.titulo" required>
                 </div>
-
+                <div class="form-group">
+                    <label class="control-label">Autor</label>
+                    <input type="text" class="form-control" ng-model="livro.autor" required>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Preço</label>
+                    <input type="number" class="form-control" ng-model="livro.preco" required>
+                </div>
                 <hr />
                 <div class="form-group text-center">
-                    <button type="submit" ng-click="adiciona()" class="btn btn-primary">Adiciona</button>
+                    <button type="submit" class="btn btn-primary">Adiciona</button>
                 </div>
             </form>
         </div>
 
-        <div class="col-md-7">
-            <table class="table table-striped">
+        <div class="col-md-8">
+            <ng-form name="formEdicao">
+                <table class="table table-striped">
 
-                <tr>
-                    <th>ISBN</th>
-                    <th>Título</th>
-                    <th>&nbsp;</th>
-                </tr>
+                    <tr>
+                        <th>ISBN</th>
+                        <th>Título</th>
+                        <th>Autor</th>
+                        <th>Preço</th>
+                        <th>&nbsp;</th>
+                    </tr>
 
-                <tr ng-repeat="livro in listaLivros">
-                    <td>{{livro.isbn}}</td>
-                    <td>{{livro.titulo}}</td>
-                    <td>
-                        <button class="btn btn-info" (click)="editar(livro)">Editar</button>
-                        <button class="btn btn-danger" (click)="excluir(livro)">Excluir</button>
-                    </td>
-                </tr>
-            </table>
+                    <tr ng-repeat="livro in listaLivros">
+                        <td> 
+                            <p ng-show="!editando || idEdicao != livro.id">
+                                {{livro.isbn}}
+                            </p> 
+                            <p ng-show="editando && idEdicao == livro.id"> 
+                                <input type="text" class="form-control" ng-model="livro.isbn" required> 
+                            </p>
+                        </td>
+                        <td>
+                            <p ng-show="!editando || idEdicao != livro.id">
+                                {{livro.titulo}}
+                            </p> 
+                            <p ng-show="editando && idEdicao == livro.id"> 
+                                <input type="text" class="form-control" ng-model="livro.titulo" required> 
+                            </p>
+                        </td>
+                        <td>
+                            <p ng-show="!editando || idEdicao != livro.id">
+                                {{livro.autor}}
+                            </p> 
+                            <p ng-show="editando && idEdicao == livro.id"> 
+                                <input type="text" class="form-control" ng-model="livro.autor" required> 
+                            </p>
+                        </td>
+                        <td>
+                            <p ng-show="!editando || idEdicao != livro.id">
+                                {{livro.preco}}
+                            </p> 
+                            <p ng-show="editando && idEdicao == livro.id"> 
+                                <input type="number" class="form-control" ng-model="livro.preco" required> 
+                            </p>
+                        </td>
+                        <td> 
+                            <button class="btn btn-info" ng-click="edita(livro)" ng-show="!editando">Editar</button>
+                            <button class="btn btn-danger" ng-click="apaga(livro)" ng-show="!editando">Excluir</button>
+                            <button class="btn btn-success" ng-click="atualiza(livro)" ng-show="editando && idEdicao == livro.id">Salvar</button>
+                        </td>
+                    </tr>
+                </table>
+            </ng-form>
         </div>
     </div>
 
